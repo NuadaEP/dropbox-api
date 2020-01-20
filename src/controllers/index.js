@@ -1,5 +1,5 @@
-const BoxController = require("./controllers/BoxController");
-const FileController = require("./controllers/FileController");
+const BoxController = require("./BoxController");
+const FileController = require("./FileController");
 
 module.exports = {
   BoxController,

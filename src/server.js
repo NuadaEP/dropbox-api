@@ -17,10 +17,14 @@ io.on("connection", socket => {
   });
 });
 
-mongoose.connect(
-  "mongodb+srv://bruno:bruno123@foodproject-yuzit.mongodb.net/test?retryWrites=true",
-  { useNewUrlParser: true }
-);
+const connectUrl = process.env.DB_URL || "mongodb://localhost:27017/dropbox";
+
+mongoose.connect(connectUrl, {
+  useCreateIndex: true,
+  useNewUrlParser: true,
+  useFindAndModify: false,
+  useUnifiedTopology: true
+});
 
 app.use((req, res, next) => {
   req.io = io;
@@ -36,4 +40,6 @@ app.use("/files", express.static(path.resolve(__dirname, "..", "tmp")));
 
 app.use(require("./routes"));
 
-server.listen(process.env.PORT || 3333);
+const port = process.env.PORT || 3333;
+
+server.listen(port, () => console.log(`Listening at http://[::]:${port}`));
