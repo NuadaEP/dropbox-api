@@ -8,12 +8,19 @@ class BoxController {
   }
 
   async show(req, res) {
-    const box = await Box.findById(req.params.id).populate({
-      path: "files",
-      options: { sort: { createdAt: -1 } }
-    });
+    try {
+      const box = await Box.findById(req.params.id).populate({
+        path: "files",
+        options: { sort: { createdAt: -1 } }
+      });
 
-    res.json(box);
+      if (!box)
+        return res.status(400).json({ error: "This box does not exist." });
+
+      return res.json(box);
+    } catch ({ message: error }) {
+      return res.status(500).json({ error });
+    }
   }
 }
 

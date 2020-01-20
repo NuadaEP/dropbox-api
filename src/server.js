@@ -38,7 +38,11 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use("/files", express.static(path.resolve(__dirname, "..", "tmp")));
 
-app.use(require("./routes"));
+app.use("/api/", require("./routes"));
+
+app.use(async (err, req, res, next) =>
+  res.status(err.status || 500).json({ error: "Internal Server Error" })
+);
 
 const port = process.env.PORT || 3333;
 
