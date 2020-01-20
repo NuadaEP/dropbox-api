@@ -2,9 +2,14 @@ const Box = require("../models/Box");
 
 class BoxController {
   async store(req, res) {
-    const box = await Box.create(req.body);
+    try {
+      console.log(req.body);
+      const box = await Box.create(req.body);
 
-    return res.json(box);
+      return res.json(box);
+    } catch ({ message: error }) {
+      return res.status(500).json({ error });
+    }
   }
 
   async show(req, res) {

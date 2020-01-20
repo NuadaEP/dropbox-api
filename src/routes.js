@@ -17,8 +17,6 @@ routes.post(
   controllers.FileController.store
 );
 
-routes.get("/", (req, res) => {
-  return res.send("Hello User");
-});
+routes.get("/", (req, res) => res.send("Hello User"));
 
 module.exports = routes;
